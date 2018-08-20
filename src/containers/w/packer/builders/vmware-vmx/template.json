@@ -1,0 +1,32 @@
+{
+  "variables": {
+    "vmware_source_path": "",
+    "vmware_floppy_files": "builders/vvmware-iso/floppy"
+  },
+  "builders": [
+    {
+      "type": "vmware-vmx",
+      "vm_name": "{{user `author`}}-{{user `name`}}-{{user `version`}}-{{isotime \"200601020304\"}}",
+      "source_path": "{{user `vmware_source_path`}}",
+      "vmx_data": {
+        "memsize": "{{user `vmware_memory`}}",
+        "numvcpus": "{{user `vmware_cpus`}}",
+        "scsi0.virtualDev": "lsisas1068",
+        "RemoteDisplay.vnc.enabled": "false",
+        "usb.present": "false",
+        "sound.present": "false"
+      },
+      "floppy_files": "{{user `vmware_floppy_files`}}",
+      "headless": "{{user `vmware_headless`}}",
+      "boot_wait": "{{user `vmware_boot_wait`}}",
+      "communicator": "{{user `vmware_communicator`}}",
+      "winrm_username": "{{user `vmware_winrm_username`}}",
+      "winrm_password": "{{user `vmware_winrm_password`}}",
+      "winrm_timeout": "{{user `vmware_winrm_timeout`}}",
+      "guest_additions_mode": "{{user `vmware_guest_additions_mode`}}",
+      "shutdown_command": "{{user `vmware_shutdown_command`}}",
+      "post_shutdown_delay": "{{user `vmware_post_shutdown_delay`}}",
+      "output_directory": "{{user `output_directory`}}"
+    }
+  ]
+}

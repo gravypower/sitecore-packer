@@ -1,0 +1,19 @@
+Vagrant.configure(2) do |config|
+  config.vm.guest = :windows
+  config.vm.communicator = 'winrm'
+
+  # VMware Fusion specific options
+  config.vm.provider :vmware_fusion do |vf|
+    vf.vmx['memsize'] = '8192'
+    vf.vmx['numvcpus'] = '2'
+  end
+
+  # VMware Workstation specific options
+  config.vm.provider :vmware_workstation do |vw|
+    vw.vmx['memsize'] = '8192'
+    vw.vmx['numvcpus'] = '2'
+
+  end
+
+  config.vm.network :forwarded_port, guest: 3389, host: 33389, auto_correct: true
+end

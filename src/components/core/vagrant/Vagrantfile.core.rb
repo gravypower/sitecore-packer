@@ -160,6 +160,29 @@ class VirtualBoxProvider < Provider
   end
 end
 
+class VmwareProvider < Provider
+  @@vmware = {
+    type: 'vmware',
+  }
+
+  def self.vmware(options = {})
+    @@vmware = @@vmware.deep_merge(options)
+  end
+
+  def initialize(vm, options = {})
+    super(vm, @@vmware.deep_merge(options))
+  end
+
+  def vagrant_configure
+    super
+
+    vagrant.name = vm.hostname
+    vagrant.linked_clone = vm.options[:linked_clone]
+
+    override.vm.network 'public_network'
+  end
+end
+
 class Provisioner
   @@core = {
     'type' => '',

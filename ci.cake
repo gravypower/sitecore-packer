@@ -47,7 +47,19 @@ IEnumerable<PackerTemplate> PackerTemplates_Create(string type, bool amazon = fa
     new [] { PackerPostProcessor_Create("vagrant-virtualbox") },
     parents != null ? parents.First(item => item.IsMatching("virtualbox-core")) : null
   );
+
   items.Add(virtualBoxCore);
+
+  var vmwareCore = PackerTemplate_Create(
+    type,
+    "vmware-core",
+    new [] { PackerBuilder_Create(parents == null ? "vmware-iso" : "vmware-vmx") },
+    new [] { PackerProvisioner_Create("chef") },
+    new [] { PackerPostProcessor_Create("vagrant-vmware") },
+    parents != null ? parents.First(item => item.IsMatching("vmware-core")) : null
+  );
+
+  items.Add(vmwareCore);
 
   return items;
 }
